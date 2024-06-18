@@ -1,23 +1,46 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
 
 function App() {
+  const [products, setProducts] = useState([]);
+  const [searchTerm, setSearchTerm] = useState('');
+
+  useEffect(() => {
+    fetch('http://localhost:4000/api/products')
+      .then(response => response.json())
+      .then(data => setProducts(data.products))
+      .catch(error => console.error('Error fetching products:', error));
+  }, []);
+
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+  };
+
+  const filteredProducts = products.filter(product =>
+    product.name.toLowerCase().includes(searchTerm.toLowerCase())
+  );
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <div className="search-bar">
+        <input 
+          type="text" 
+          placeholder="Search products..." 
+          value={searchTerm} 
+          onChange={handleSearch} 
+        />
+      </div>
+      <div className="products">
+        {filteredProducts.map(product => (
+          <div className="product-card" key={product._id}>
+            <h2>{product.name}</h2>
+            <p>{product.description}</p>
+            <p>Price: ${product.price}</p>
+            <p>Quantity: {product.quantity}</p>
+            <p>Category: {product.category}</p>
+          </div>
+        ))}
+      </div>
     </div>
   );
 }
