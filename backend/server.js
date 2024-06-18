@@ -3,6 +3,7 @@ const {mongoose } = require("mongoose")
 const cors=require("cors")
 const app = express()
 const dotenv=require("dotenv")
+const router=require("./routes/router")
 
 
 const connectDB = async() => {
@@ -18,6 +19,7 @@ app.use(cors())
 dotenv.config()
 connectDB()
 app.use(express.json())
+app.use("/api",router)
 
 
 
