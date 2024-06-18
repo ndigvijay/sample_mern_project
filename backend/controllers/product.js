@@ -24,7 +24,7 @@ const ProductAdd=async (req,res)=>{
 const ProductGet=async(req,res)=>{
     try {
         const ProductList= await Product.find()
-        res.status(200).josn({"products":ProductList})
+        res.status(200).json({"products":ProductList})
     } catch (err) {
         console.log("error getting products",err)
         res.status(404).json({messsae:"error getting products",error:err})
