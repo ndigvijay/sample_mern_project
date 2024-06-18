@@ -6,7 +6,7 @@ function App() {
   const [searchTerm, setSearchTerm] = useState('');
 
   useEffect(() => {
-    fetch('http://localhost:4000/api/products')
+    fetch('https://sample-mern-project-backend.onrender.com/')
       .then(response => response.json())
       .then(data => setProducts(data.products))
       .catch(error => console.error('Error fetching products:', error));
